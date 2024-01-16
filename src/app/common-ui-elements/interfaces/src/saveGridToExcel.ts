@@ -4,6 +4,7 @@ import {
   FieldRef,
   ValueConverters,
   getEntityRef,
+  QueryResult,
 } from 'remult'
 import { terms } from '../../../terms'
 import type { BusyService } from '../../src/angular/wait/busy-service'
@@ -29,6 +30,31 @@ export async function saveToExcel<
     loadPage?: (items: E[]) => Promise<void>
   }
 ) {
+  let rows = grid.repository.query(await grid.getFilterWithSelectedRows())
+  await exportQueryToExcel<E>(rows, fileName, busyService, args)
+}
+export async function exportQueryToExcel<E = any>(
+  rows: QueryResult<E>,
+  fileName: string,
+  busyService: BusyService,
+  args:
+    | {
+        hideColumn?: ((e: E, c: FieldRef<any>) => boolean) | undefined
+        excludeColumn?: ((e: E, c: FieldRef<any>) => boolean) | undefined
+        moreColumns?:
+          | ((
+              e: E,
+              addfield: (
+                caption: string,
+                v: string,
+                t: import('xlsx').ExcelDataType
+              ) => void
+            ) => void)
+          | undefined
+        loadPage?: ((items: E[]) => Promise<void>) | undefined
+      }
+    | undefined
+) {
   let { hideColumn, excludeColumn, moreColumns, loadPage } = args || {}
   await busyService.doWhileShowingBusy(async () => {
     let XLSX = await import('xlsx')
@@ -45,7 +71,6 @@ export async function saveToExcel<
     let titleRow = 1
     let rowNum = titleRow + 1
 
-    let rows = grid.repository.query(await grid.getFilterWithSelectedRows())
     let currentPage = await rows.paginator()
     while (currentPage != null) {
       if (loadPage) await loadPage(currentPage.items)
@@ -142,6 +167,7 @@ export async function saveToExcel<
     XLSX.writeFile(wb, fileName + '.xlsx')
   })
 }
+
 export async function jsonToXlsx(
   busy: BusyService,
   rows: any[],

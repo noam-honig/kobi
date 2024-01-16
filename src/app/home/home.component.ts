@@ -109,7 +109,10 @@ class search {
   }
 }
 
-//[ ] - export to excel
+//[V] - change name to היום לפני
+//[V] - hide sidebar when not needed
+//[ ] - make selection easier
+//[V] - export to excel
 //[V] - free text search
 //[ ] - the default for a new should be the selected values
 //[V] - only kobi and noam can add
@@ -117,10 +120,7 @@ class search {
 //[V] - keep enters in text
 //[V] - don't show id in dialog
 //[ ] - import existing data
-//[ ] - change name to היום לפני
-//[ ] - hide sidebar when not needed
 //[ ] - display items better (with .... and more)
 //[ ] - display search text better with bold
 //[ ] - february
-//[ ] - make selection easier
 //[ ] - allow url with date

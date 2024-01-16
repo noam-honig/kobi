@@ -3,13 +3,15 @@ import { Router, Route, ActivatedRoute } from '@angular/router'
 import { MatSidenav } from '@angular/material/sidenav'
 
 import { UIToolsService } from './common/UIToolsService'
-import { openDialog, RouteHelperService } from 'common-ui-elements'
+import { BusyService, openDialog, RouteHelperService } from 'common-ui-elements'
 import { User } from './users/user'
 import { DataAreaDialogComponent } from './common/data-area-dialog/data-area-dialog.component'
 import { terms } from './terms'
 import { SignInController } from './users/SignInController'
 import { UpdatePasswordController } from './users/UpdatePasswordController'
-import { remult } from 'remult'
+import { remult, repo } from 'remult'
+import { exportQueryToExcel } from './common-ui-elements/interfaces/src/saveGridToExcel'
+import { Event } from './home/events'
 
 @Component({
   selector: 'app-root',
@@ -21,7 +23,8 @@ export class AppComponent implements OnInit {
     public router: Router,
     public activeRoute: ActivatedRoute,
     private routeHelper: RouteHelperService,
-    public uiService: UIToolsService
+    public uiService: UIToolsService,
+    public busy: BusyService
   ) {}
   terms = terms
   remult = remult
@@ -97,6 +100,9 @@ export class AppComponent implements OnInit {
   }
   doesNotRequireLogin() {
     return this.activeRoute?.snapshot?.firstChild?.data?.['noLogin']
+  }
+  exportToExcel() {
+    exportQueryToExcel(repo(Event).query(), 'events.xlsx', this.busy, {})
   }
 
   shouldDisplayRoute(route: Route) {

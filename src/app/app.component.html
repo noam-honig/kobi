@@ -28,7 +28,6 @@
     <mat-sidenav
       #sidenav
       class="app-sidenav mat-elevation-z10 no-print"
-      [opened]="!uiService.isScreenSmall()"
       [mode]="uiService.isScreenSmall() ? 'over' : 'side'"
     >
       <div style="width: 100%; text-align: center"></div>
@@ -46,6 +45,13 @@
             }}</a>
           </mat-list-item>
         </ng-container>
+        <mat-list-item
+          routerLinkActive="active-route"
+          *ngIf="remult.authenticated()"
+          (click)="exportToExcel()"
+        >
+          יצוא לאקסל
+        </mat-list-item>
       </mat-nav-list>
     </mat-sidenav>
     <div class="app-sidenav-content">
