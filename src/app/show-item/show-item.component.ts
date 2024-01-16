@@ -20,6 +20,7 @@ export class ShowItemComponent implements OnInit {
   ngAfterViewInit() {
     setTimeout(() => this.checkContentHeight())
   }
+
   maxHeight = 100
   scrollHeight = 0
 
@@ -35,7 +36,9 @@ export class ShowItemComponent implements OnInit {
 
   toggleText(e: { preventDefault: () => void }) {
     e.preventDefault()
-    this.showFullText = !this.showFullText
+    this.checkContentHeight()
+    if (this.showFullText || this.shouldShowReadMore)
+      this.showFullText = !this.showFullText
   }
   ngOnInit(): void {}
   remult = remult

@@ -4,6 +4,7 @@
     class="text-content"
     [class.truncate]="!showFullText"
     [style.max-height]="showFullText ? scrollHeight + 'px' : maxHeight + 'px'"
+    (resize)="checkContentHeight()"
   >
     <p (click)="toggleText($event)">
       {{
