@@ -19,8 +19,8 @@ import { start } from 'repl'
 })
 export class HomeComponent implements OnInit {
   constructor(private ui: UIToolsService) {}
-
-  search = new search()
+  search = repo(Event).create()
+  searchString = new Search()
 
   change = new Subject()
   events$ = this.change.pipe(
@@ -28,9 +28,9 @@ export class HomeComponent implements OnInit {
     switchMap(() =>
       fromLiveQuery(
         repo(Event).liveQuery({
-          where: this.search.search.trim()
+          where: this.searchString.search.trim()
             ? {
-                $and: this.search.search
+                $and: this.searchString.search
                   .split(' ')
                   .map((x) => x.trim())
                   .map((x) => x)
@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit {
     fields: () => {
       const s = this.search
       return [
-        [s.$.month, s.$.day, s.$.search].map((f) => ({
+        [s.$.month, s.$.day, getFields(this.searchString).search].map((f) => ({
           field: f,
           valueChange: () => this.change.next({}),
         })),
@@ -73,45 +73,26 @@ export class HomeComponent implements OnInit {
     await this.ui.areaDialog({
       width: '85vw',
       title: 'הוספת אירוע',
-      fields: e.$.toArray().filter((x) => x != e.$.id),
+      fields: [[e.$.month, e.$.day, e.$.year], e.$.title, e.$.description],
       ok: async () => {
         this.last = await e.save()
       },
     })
   }
-  async editEvent(e: Event) {
-    await this.ui.areaDialog({
-      width: '85vw',
-      title: 'עדכון אירוע',
-      fields: e.$.toArray().filter((x) => x != e.$.id),
-      ok: async () => {
-        this.last = await e.save()
-      },
-      cancel: async () => {
-        await e._.undoChanges()
-      },
-    })
-  }
+
   ngOnInit() {}
   allowed() {
     return remult.authenticated()
   }
 }
-class search {
-  @Fields.number({ caption: 'חודש', width: '60px' })
-  month = new Date().getMonth() + 1
-  @Fields.number({ caption: 'יום', width: '60px' })
-  day = new Date().getDate()
+class Search {
   @Fields.string({ caption: 'חיפוש' })
   search = ''
-  get $() {
-    return getFields<search>(this)
-  }
 }
 
 //[V] - change name to היום לפני
 //[V] - hide sidebar when not needed
-//[ ] - make selection easier
+//[V] - make selection easier
 //[V] - export to excel
 //[V] - free text search
 //[ ] - the default for a new should be the selected values

@@ -1,0 +1,14 @@
+.text-content {
+
+  /* Adjust as per your requirement */
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+
+}
+
+.text-content.truncate {
+
+  white-space: pre-line;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

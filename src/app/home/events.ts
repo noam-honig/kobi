@@ -12,9 +12,23 @@ import { Allow, Entity, EntityBase, Fields } from 'remult'
 export class Event extends EntityBase {
   @Fields.cuid()
   id = ''
-  @Fields.number({ caption: 'חודש' })
+  @Fields.number({
+    caption: 'חודש',
+    width: '80px',
+    valueList: Array.from(Array(12).keys()).map((x) => ({
+      id: x + 1 + '',
+      caption: x + 1,
+    })),
+  })
   month = new Date().getMonth() + 1
-  @Fields.number({ caption: 'יום' })
+  @Fields.number({
+    caption: 'יום',
+    width: '80px',
+    valueList: Array.from(Array(31).keys()).map((x) => ({
+      id: x + 1 + '',
+      caption: x + 1,
+    })),
+  })
   day = new Date().getDate()
   @Fields.number({ caption: 'שנה' })
   year = new Date().getFullYear()

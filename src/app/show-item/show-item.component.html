@@ -1,0 +1,29 @@
+<mat-card style="margin-bottom: 8px">
+  <div
+    #textContent
+    class="text-content"
+    [class.truncate]="!showFullText"
+    [style.max-height]="showFullText ? scrollHeight + 'px' : maxHeight + 'px'"
+  >
+    <p (click)="toggleText($event)">
+      {{
+        (showFullDate ? event.day + '/' + event.month + '/' : '') + event.year
+      }}
+      - {{ event.title }}
+    </p>
+    <p (click)="toggleText($event)">{{ event.description }}</p>
+    <a
+      *ngIf="remult.authenticated()"
+      href="#"
+      (click)="edit(); $event.preventDefault()"
+      >ערוך</a
+    >
+  </div>
+  <a
+    href="#"
+    *ngIf="shouldShowReadMore"
+    (click)="toggleText($event)"
+    style="width: 100%; display: block; text-align: left"
+    >{{ showFullText ? 'פחות' : 'עוד' }}...</a
+  >
+</mat-card>
