@@ -27,6 +27,7 @@ export const api = remultExpress({
     let month = 0
     for (const sheetName of sheetNames) {
       month++
+      if (month != 2) continue
       const worksheet = workbook.Sheets[sheetName]
       const jsonData: any[][] = xlsx.utils.sheet_to_json(worksheet, {
         header: 1,
