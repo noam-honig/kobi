@@ -8,7 +8,7 @@ import {
 import { fromLiveQuery } from '../common/from-live-query'
 import { Events } from 'pg'
 import { UIToolsService } from '../common/UIToolsService'
-import { Event } from './events'
+import { Event, daysValueList } from './events'
 import { Observable, Subject, startWith, switchMap } from 'rxjs'
 import { start } from 'repl'
 
@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
               }
             : {
                 month: this.search.month,
-                day: this.search.day,
+                day: this.search.day != 0 ? this.search.day : undefined,
               },
         })
       )
@@ -55,10 +55,21 @@ export class HomeComponent implements OnInit {
     fields: () => {
       const s = this.search
       return [
-        [s.$.month, s.$.day, getFields(this.searchString).search].map((f) => ({
-          field: f,
-          valueChange: () => this.change.next({}),
-        })),
+        [
+          {
+            valueChange: () => this.change.next({}),
+            field: s.$.month,
+          },
+          {
+            valueChange: () => this.change.next({}),
+            field: s.$.day,
+            valueList: [{ id: 0, caption: 'כל החודש' }, ...daysValueList],
+          },
+          {
+            valueChange: () => this.change.next({}),
+            field: getFields(this.searchString).search,
+          },
+        ],
       ]
     },
   })

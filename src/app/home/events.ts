@@ -1,5 +1,9 @@
 import { Allow, Entity, EntityBase, Fields } from 'remult'
 
+export const daysValueList = Array.from(Array(31).keys()).map((x) => ({
+  id: x + 1 + '',
+  caption: x + 1,
+}))
 @Entity('events', {
   allowApiCrud: Allow.authenticated,
   allowApiRead: true,
@@ -24,10 +28,7 @@ export class Event extends EntityBase {
   @Fields.number({
     caption: 'יום',
     width: '80px',
-    valueList: Array.from(Array(31).keys()).map((x) => ({
-      id: x + 1 + '',
-      caption: x + 1,
-    })),
+    valueList: daysValueList,
   })
   day = new Date().getDate()
   @Fields.number({ caption: 'שנה' })

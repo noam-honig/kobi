@@ -108,7 +108,7 @@ export class UIToolsService implements UITools {
             fieldMetadata.options.clickWithUI!(this, entity, fieldRef)
         }
       }
-      if (fieldMetadata.options.valueList)
+      if (fieldMetadata.options.valueList && !options.valueList)
         options.valueList = fieldMetadata.options.valueList
       if (fieldMetadata.options.width)
         options.width = fieldMetadata.options.width

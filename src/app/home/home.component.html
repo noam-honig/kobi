@@ -14,7 +14,7 @@
     <app-show-item
       *ngFor="let e of events$ | async"
       [event]="e"
-      [showFullDate]="!!searchString.search"
+      [showFullDate]="!!searchString.search || search.day == 0"
     ></app-show-item>
   </div>
 </div>
