@@ -1,0 +1,29 @@
+<button
+  *ngIf="allowed()"
+  mat-raised-button
+  color="primary"
+  (click)="addEvent()"
+>
+  הוסף
+</button>
+<data-area [settings]="area"></data-area>
+<table>
+  <thead>
+    <tr>
+      <th>חודש</th>
+      <th>יום</th>
+      <th>שנה</th>
+      <th>כותרת</th>
+      <th>תאור</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of events$ | async" (click)="editEvent(e)">
+      <td>{{ e.month }}</td>
+      <td>{{ e.day }}</td>
+      <td>{{ e.year }}</td>
+      <td style="white-space: pre-line">{{ e.title }}</td>
+      <td style="white-space: pre-line">{{ e.description }}</td>
+    </tr>
+  </tbody>
+</table>
