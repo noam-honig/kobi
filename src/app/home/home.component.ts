@@ -62,20 +62,19 @@ export class HomeComponent implements OnInit {
       ]
     },
   })
-  last?: Event
+
   async addEvent() {
     const e = repo(Event).create()
-    if (this.last) {
-      e.month = this.last.month
-      e.day = this.last.day
-      e.year = this.last.year
-    }
+
+    e.month = this.search.month
+    e.day = this.search.day
+
     await this.ui.areaDialog({
       width: '85vw',
       title: 'הוספת אירוע',
       fields: [[e.$.month, e.$.day, e.$.year], e.$.title, e.$.description],
       ok: async () => {
-        this.last = await e.save()
+        await e.save()
       },
     })
   }
@@ -95,13 +94,12 @@ class Search {
 //[V] - make selection easier
 //[V] - export to excel
 //[V] - free text search
-//[ ] - the default for a new should be the selected values
 //[V] - only kobi and noam can add
 //[V] - click on text will allow edit
 //[V] - keep enters in text
 //[V] - don't show id in dialog
+//[V] - display items better (with .... and more)
+//[v] - the default for a new should be the selected values
 //[ ] - import existing data
-//[ ] - display items better (with .... and more)
 //[ ] - display search text better with bold
-//[ ] - february
 //[ ] - allow url with date
