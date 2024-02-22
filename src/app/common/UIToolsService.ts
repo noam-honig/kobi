@@ -1,6 +1,6 @@
 import { Injectable, NgZone, ErrorHandler } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { Remult } from 'remult'
+import { Remult, repo } from 'remult'
 
 import { YesNoQuestionComponent } from './yes-no-question/yes-no-question.component'
 import {
@@ -22,6 +22,7 @@ import { AddressInputComponent } from './address-input/address-input.component'
 import { User } from '../users/user'
 import { InputImageComponent } from './input-image/input-image.component'
 import { MultiSelectListDialogComponent } from './multi-select-list-dialog/multi-select-list-dialog.component'
+import { Event } from '../home/events'
 
 @Injectable()
 export class UIToolsService implements UITools {
@@ -40,6 +41,12 @@ export class UIToolsService implements UITools {
   multiSelectValueDialog<T>(args: MultiSelectOptions<T>): Promise<void> {
     return openDialog(MultiSelectListDialogComponent, (x) => x.args(args))
   }
+  refreshTotal() {
+    repo(Event)
+      .count()
+      .then((x) => (this.totalCount = x))
+  }
+  totalCount = 0
 
   info(info: string): any {
     this.snackBar.open(info, 'סגור', { duration: 4000 })

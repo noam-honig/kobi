@@ -44,7 +44,9 @@ export class AppComponent implements OnInit {
     )
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.uiService.refreshTotal()
+  }
 
   signOut() {
     SignInController.signOut()

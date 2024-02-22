@@ -2,6 +2,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core'
 import { Event } from '../home/events'
 import { remult } from 'remult'
 import { UIToolsService } from '../common/UIToolsService'
+import { sendWhatsappToPhone, whatsappUrl } from '../common/fields/PhoneField'
 
 @Component({
   selector: 'app-show-item',
@@ -40,6 +41,12 @@ export class ShowItemComponent implements OnInit {
     if (this.showFullText || this.shouldShowReadMore)
       this.showFullText = !this.showFullText
   }
+  whatsapp() {
+    sendWhatsappToPhone(
+      '',
+      this.event.year + ' - ' + this.event.title + '\n' + this.event.description
+    )
+  }
   ngOnInit(): void {}
   remult = remult
   async edit() {
@@ -48,7 +55,17 @@ export class ShowItemComponent implements OnInit {
       width: '85vw',
       title: 'עדכון אירוע',
       fields: [[e.$.month, e.$.day, e.$.year], e.$.title, e.$.description],
-
+      buttons: [
+        {
+          text: 'מחק',
+          click: async (close) => {
+            if (await this.ui.yesNoQuestion('בטוח שאתה רוצה למחוק???')) {
+              await e.delete()
+              close()
+            }
+          },
+        },
+      ],
       ok: async () => {
         await e.save()
       },

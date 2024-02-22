@@ -64,14 +64,14 @@ export function PhoneField<entityType>(
   ]
   if (options?.validate) {
     if (!Array.isArray(options.validate)) options.validate = [options.validate]
-    validate.push(...options.validate)
+    //validate.push(...options.validate)
   }
   return Fields.string({
     caption: 'מספר טלפון',
     inputType: 'tel',
     displayValue: (_, value) => formatPhone(value),
     ...options,
-    validate,
+    //  validate,
   })
 }
 

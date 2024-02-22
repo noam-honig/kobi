@@ -66,8 +66,9 @@ export class HomeComponent implements OnInit {
             valueList: [{ id: 0, caption: 'כל החודש' }, ...daysValueList],
           },
           {
-            valueChange: () => this.change.next({}),
             field: getFields(this.searchString).search,
+            click: () => this.change.next({}),
+            clickIcon: 'search',
           },
         ],
       ]
@@ -86,6 +87,7 @@ export class HomeComponent implements OnInit {
       fields: [[e.$.month, e.$.day, e.$.year], e.$.title, e.$.description],
       ok: async () => {
         await e.save()
+        this.ui.refreshTotal()
       },
     })
   }
