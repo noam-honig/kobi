@@ -152,11 +152,17 @@ export class HomeComponent implements OnInit {
       return [
         [
           {
-            valueChange: () => this.load(),
+            valueChange: () => {
+              this.sort = sortOptions.find((x) => x.normal)!
+              this.load()
+            },
             field: s.$.month,
           },
           {
-            valueChange: () => this.load(),
+            valueChange: () => {
+              this.sort = sortOptions.find((x) => x.normal)!
+              this.load()
+            },
             field: s.$.day,
             valueList: [{ id: 0, caption: 'כל החודש' }, ...daysValueList],
           },
