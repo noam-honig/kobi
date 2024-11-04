@@ -28,8 +28,9 @@ import { TextAreaDataControlComponent } from './common/textarea-data-control/tex
 import { DotsMenuComponent } from './common/dot-menu.component'
 import { AddressInputComponent } from './common/address-input/address-input.component'
 import { MultiSelectListDialogComponent } from './common/multi-select-list-dialog/multi-select-list-dialog.component'
-import { InputImageComponent } from './common/input-image/input-image.component';
+import { InputImageComponent } from './common/input-image/input-image.component'
 import { ShowItemComponent } from './show-item/show-item.component'
+import { MatProgressBarModule } from '@angular/material/progress-bar'
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { ShowItemComponent } from './show-item/show-item.component'
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    MatProgressBarModule,
     MatSidenavModule,
     MatListModule,
     MatToolbarModule,

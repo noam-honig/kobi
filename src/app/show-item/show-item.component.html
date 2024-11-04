@@ -7,10 +7,15 @@
     (resize)="checkContentHeight()"
   >
     <p (click)="toggleText($event)">
+      <img
+        *ngIf="event.imageUrl"
+        style="max-height: 50px; max-width: 50px; float: right; margin: 4px"
+        [src]="event.imageUrl"
+      />
       {{
         (showFullDate ? event.day + '/' + event.month + '/' : '') + event.year
       }}
-      - {{ event.title }}
+      - <span [innerHTML]="transform(event.title)"></span>
       <a
         *ngIf="remult.authenticated()"
         href="#"
@@ -28,7 +33,23 @@
         whatsapp</a
       >
     </p>
-    <p (click)="toggleText($event)">{{ event.description }}</p>
+
+    <p
+      style="white-space: break-spaces"
+      (click)="toggleText($event)"
+      [innerHTML]="transform(event.description)"
+    ></p>
+    <ng-container *ngFor="let s of sources(); let i = index">
+      <a [href]="s" target="_blank"> {{ i + 1 }}</a>
+      |
+    </ng-container>
+    <a href="https://chat.openai.com/?q={{ aiSearchText() }}" target="_blank"
+      >Chat Gpt</a
+    >
+    |
+    <a href="https://www.perplexity.ai/?q={{ aiSearchText() }}" target="_blank"
+      >perplexity</a
+    >
   </div>
   <a
     href="#"

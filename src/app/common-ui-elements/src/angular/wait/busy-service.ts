@@ -34,7 +34,7 @@ export class BusyService {
   static singleInstance: BusyService
   private id = 0
   private numOfWaits = 0
-  private disableWait = 0
+  private disableWait = 999999
   log(id: number, what: string) {
     //console.log(what + ' id:' + this.id + ' w:' + this.numOfWaits);
   }

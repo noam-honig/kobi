@@ -11,6 +11,7 @@ export const daysValueList = Array.from(Array(31).keys()).map((x) => ({
     month: 'asc',
     day: 'asc',
     year: 'asc',
+    orderInDay: 'asc',
   },
 })
 export class Event extends EntityBase {
@@ -33,6 +34,9 @@ export class Event extends EntityBase {
   day = new Date().getDate()
   @Fields.number({ caption: 'שנה' })
   year = new Date().getFullYear()
+  @Fields.integer({ caption: 'סדר בתוך היום' })
+  orderInDay = 0
+
   @Fields.string({
     customInput: (x) => x.textarea(),
     caption: 'כותרת',
@@ -43,4 +47,37 @@ export class Event extends EntityBase {
     caption: 'תאור',
   })
   description = ''
+  @Fields.string({
+    caption: 'קישור לתמונה',
+  })
+  imageUrl = ''
+  @Fields.string({
+    caption: 'מקור 1',
+  })
+  source1 = ''
+  @Fields.string({
+    caption: 'מקור 2',
+  })
+  source2 = ''
+  @Fields.string({
+    caption: 'מקור 3',
+  })
+  source3 = ''
+  @Fields.string({
+    caption: 'מקור 4',
+  })
+  source4 = ''
+  @Fields.string({
+    caption: 'מקור 5',
+  })
+  source5 = ''
+
+  @Fields.createdAt()
+  createdAt = new Date()
+  @Fields.updatedAt()
+  updatedAt = new Date()
+
+  message() {
+    return '*' + this.year + '* - ' + this.title + '\n' + this.description
+  }
 }

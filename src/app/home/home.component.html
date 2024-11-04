@@ -1,23 +1,50 @@
 <div class="full-page">
   <mat-card style="margin-bottom: 4px">
-    <button
-      *ngIf="allowed()"
-      mat-raised-button
-      color="primary"
-      (click)="addEvent()"
-    >
-      הוסף
-    </button>
+    <div style="gap: 8px; display: flex">
+      <button
+        *ngIf="allowed()"
+        mat-raised-button
+        color="primary"
+        (click)="addEvent()"
+      >
+        הוסף
+      </button>
+      <button
+        *ngIf="allowed() && shouldShowTodayButton()"
+        mat-raised-button
+        (click)="today()"
+      >
+        היום
+      </button>
+      <button
+        *ngIf="allowed() && shouldShowWhatsappAll()"
+        mat-raised-button
+        (click)="whatsappAll()"
+      >
+        whatsapp
+      </button>
+      <app-dots-menu
+        [buttons]="buttons"
+        style="margin-right: auto"
+      ></app-dots-menu>
+    </div>
     <data-area [settings]="area"></data-area>
   </mat-card>
-  <div class="grow-item" *ngIf="events$ | async as events">
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+  <div class="grow-item" *ngIf="events as events">
     <app-show-item
       *ngFor="let e of events"
       [event]="e"
-      [showFullDate]="!!searchString.search || search.day == 0"
+      [showFullDate]="showFullDate"
+      [search]="searchString.search"
+      (change)="load()"
     ></app-show-item>
     <div style="padding: 0 1rem">
-      סה"כ: {{ events.length }}
+      <a (click)="limit = limit * 2; load()" *ngIf="limit == events.length"
+        >מציג {{ limit }} ראשונים - לחץ לעוד</a
+      >
+      <span *ngIf="limit != events.length"> סה"כ: {{ events.length }}</span>
       <ng-container *ngIf="search.day && search.month">
         |
         <a
