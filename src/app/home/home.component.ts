@@ -200,6 +200,7 @@ export class HomeComponent implements OnInit {
         e.$.source4,
         e.$.source5,
       ],
+      buttons: e.gptButtons,
       ok: async () => {
         await e.save()
         this.load()

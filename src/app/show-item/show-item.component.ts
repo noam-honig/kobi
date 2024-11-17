@@ -106,6 +106,7 @@ export class ShowItemComponent implements OnInit {
         e.$.source5,
       ],
       buttons: [
+        ...e.gptButtons,
         {
           text: 'מחק',
           click: async (close) => {

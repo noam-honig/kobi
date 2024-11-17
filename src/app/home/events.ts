@@ -1,4 +1,6 @@
 import { Allow, Entity, EntityBase, Fields } from 'remult'
+import { RowButton } from '../common-ui-elements/interfaces'
+import { button } from '../common/UITools'
 
 export const daysValueList = Array.from(Array(31).keys()).map((x) => ({
   id: x + 1 + '',
@@ -10,7 +12,7 @@ export const daysValueList = Array.from(Array(31).keys()).map((x) => ({
   defaultOrderBy: {
     month: 'asc',
     day: 'asc',
-    year: 'asc',
+    year: 'desc',
     orderInDay: 'asc',
   },
 })
@@ -80,4 +82,20 @@ export class Event extends EntityBase {
   message() {
     return '*' + this.year + '* - ' + this.title + '\n' + this.description
   }
+
+  aiTextWithoutDate() {
+    return `ספר לי עוד על:  ${this.title} ${this.description}`
+  }
+  gptButtons: button[] = [
+    {
+      click: (e) =>
+        window.open('https://chat.openai.com/?q=' + this.aiTextWithoutDate()),
+      text: 'gpt',
+    },
+    {
+      click: (e) =>
+        window.open('https://www.perplexity.ai/?q=' + this.aiTextWithoutDate()),
+      text: 'perplexity',
+    },
+  ]
 }
