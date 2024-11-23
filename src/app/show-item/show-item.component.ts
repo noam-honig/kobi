@@ -64,7 +64,8 @@ export class ShowItemComponent implements OnInit {
     }
   }
 
-  toggleText(e: { preventDefault: () => void }) {
+  toggleText(e: { preventDefault: () => void; target: any }) {
+    if (e.target?.nodeName === 'IMG') return
     e.preventDefault()
     this.checkContentHeight()
     if (this.showFullText || this.shouldShowReadMore)

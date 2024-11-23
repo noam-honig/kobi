@@ -55,7 +55,7 @@ const sortOptions: {
 })
 export class HomeComponent implements OnInit {
   constructor(private ui: UIToolsService, private busy: BusyService) {}
-  default = repo(Event).create()
+
   search = repo(Event).create()
   searchString = new Search()
   sort = sortOptions.find((x) => x.normal)!
@@ -70,9 +70,10 @@ export class HomeComponent implements OnInit {
     }))
 
   shouldShowTodayButton() {
+    const today = repo(Event).create()
     return (
-      this.search.month != this.default.month ||
-      this.search.day != this.default.day ||
+      this.search.month != today.month ||
+      this.search.day != today.day ||
       this.searchString.search.length > 0
     )
   }
@@ -84,8 +85,9 @@ export class HomeComponent implements OnInit {
     )
   }
   today() {
-    this.search.month = this.default.month
-    this.search.day = this.default.day
+    const today = repo(Event).create()
+    this.search.month = today.month
+    this.search.day = today.day
     this.searchString.search = ''
     this.load()
   }

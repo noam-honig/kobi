@@ -10,7 +10,7 @@
         הוסף
       </button>
       <button
-        *ngIf="allowed() && shouldShowTodayButton()"
+        *ngIf="shouldShowTodayButton()"
         mat-raised-button
         (click)="today()"
       >

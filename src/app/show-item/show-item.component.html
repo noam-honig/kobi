@@ -7,11 +7,14 @@
     (resize)="checkContentHeight()"
   >
     <p (click)="toggleText($event)">
-      <img
-        *ngIf="event.imageUrl"
-        style="max-height: 50px; max-width: 50px; float: right; margin: 4px"
-        [src]="event.imageUrl"
-      />
+      <a [href]="event.imageUrl" target="_blank">
+        <img
+          *ngIf="event.imageUrl"
+          style="max-height: 50px; max-width: 50px; float: right; margin: 4px"
+          [src]="event.imageUrl"
+        />
+      </a>
+
       {{
         (showFullDate ? event.day + '/' + event.month + '/' : '') + event.year
       }}
@@ -39,6 +42,11 @@
       (click)="toggleText($event)"
       [innerHTML]="transform(event.description)"
     ></p>
+    <img
+      *ngIf="event.imageUrl"
+      style="margin: 4px; display: block"
+      [src]="event.imageUrl"
+    />
     <ng-container *ngFor="let s of sources(); let i = index">
       <a [href]="s" target="_blank"> {{ i + 1 }}</a>
       |
