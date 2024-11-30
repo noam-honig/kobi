@@ -12,6 +12,8 @@ import { remult } from 'remult'
 import { UIToolsService } from '../common/UIToolsService'
 import { sendWhatsappToPhone, whatsappUrl } from '../common/fields/PhoneField'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
+import { openDialog } from '../common-ui-elements'
+import { UploadImageComponent } from './upload-image.component'
 
 @Component({
   selector: 'app-show-item',
@@ -31,6 +33,17 @@ export class ShowItemComponent implements OnInit {
 
   ngAfterViewInit() {
     setTimeout(() => this.checkContentHeight())
+  }
+  imageUrl() {
+    if (this.event.imageUrl) return this.event.imageUrl
+    if (this.event.hasS3Image)
+      return (
+        '/api/images/' +
+        this.event.id +
+        '?x=' +
+        this.event.updatedAt.toISOString()
+      )
+    return undefined
   }
 
   maxHeight = 100
@@ -106,8 +119,33 @@ export class ShowItemComponent implements OnInit {
         e.$.source4,
         e.$.source5,
       ],
+      menuButtons: [
+        ...e.gptButtons.map((y) => ({
+          name: y.text,
+          click: () => y.click(() => {}),
+        })),
+        {
+          name: 'העלה תמונה',
+          click: async () => {
+            this.uploadImage()
+          },
+        },
+        {
+          visible: () => e.hasS3Image,
+          name: 'מחק תמונה',
+          click: async () => {
+            if (
+              await this.ui.yesNoQuestion('בטוח שאתה רוצה למחוק את התמונה???')
+            ) {
+              e.imageUrl = ''
+              e.hasS3Image = false
+              await e.save()
+              this.change.next()
+            }
+          },
+        },
+      ],
       buttons: [
-        ...e.gptButtons,
         {
           text: 'מחק',
           click: async (close) => {
@@ -127,5 +165,16 @@ export class ShowItemComponent implements OnInit {
         await e._.undoChanges()
       },
     })
+  }
+  uploadImage() {
+    openDialog(
+      UploadImageComponent,
+      (x) =>
+        (x.args = {
+          afterUpload: async (image: string, fileName: string) => {
+            await Event.uploadImage(this.event.id, image)
+          },
+        })
+    )
   }
 }

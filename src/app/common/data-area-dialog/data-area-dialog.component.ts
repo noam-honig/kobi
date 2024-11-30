@@ -4,6 +4,7 @@ import {
   DataAreaFieldsSetting,
   DataAreaSettings,
   IDataAreaSettings,
+  RowButton,
 } from 'common-ui-elements/interfaces'
 import { getFields } from 'remult'
 import { terms } from '../../terms'
@@ -32,6 +33,7 @@ export class DataAreaDialogComponent implements OnInit {
     validate?: () => Promise<void>
     buttons?: button[]
     width?: string
+    menuButtons?: RowButton<any>[]
   }
   terms = terms
   constructor(public dialogRef: MatDialogRef<any>) {

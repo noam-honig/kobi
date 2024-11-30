@@ -23,6 +23,7 @@
     "@angular/platform-browser": "^14.3.0",
     "@angular/platform-browser-dynamic": "^14.3.0",
     "@angular/router": "^14.3.0",
+    "@aws-sdk/client-s3": "^3.701.0",
     "@types/googlemaps": "^3.43.3",
     "@types/node-fetch": "^2.6.6",
     "compression": "^1.7.4",
@@ -70,6 +71,9 @@
   "browser": {
     "jsonwebtoken": false,
     "password-hash": false,
-    "node-fetch": false
+    "node-fetch": false,
+    "@aws-sdk/client-s3": false,
+    "util": false,
+    "stream": false
   }
 }

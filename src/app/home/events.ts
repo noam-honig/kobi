@@ -1,6 +1,8 @@
-import { Allow, Entity, EntityBase, Fields } from 'remult'
+import { Allow, BackendMethod, Entity, EntityBase, Fields, repo } from 'remult'
+import { base64ToS3 } from '../../server/play-with-s3'
 import { RowButton } from '../common-ui-elements/interfaces'
 import { button } from '../common/UITools'
+import { Roles } from '../users/roles'
 
 export const daysValueList = Array.from(Array(31).keys()).map((x) => ({
   id: x + 1 + '',
@@ -78,6 +80,18 @@ export class Event extends EntityBase {
   createdAt = new Date()
   @Fields.updatedAt()
   updatedAt = new Date()
+  @Fields.boolean()
+  hasS3Image = false
+
+  @BackendMethod({ allowed: Roles.admin })
+  static async uploadImage(id: string, image: string) {
+    var e = await repo(Event).findId(id)
+    console.log(image.length)
+    await base64ToS3(id, image)
+    e.hasS3Image = true
+    await e.save()
+    return 'ok'
+  }
 
   message() {
     return '*' + this.year + '* - ' + this.title + '\n' + this.description

@@ -1,4 +1,10 @@
-<h3 matDialogHeader>{{ args.title }}</h3>
+<div style="display: flex; justify-content: space-between">
+  <h3 matDialogHeader>{{ args.title }}</h3>
+  <app-dots-menu
+    [buttons]="args.menuButtons!"
+    *ngIf="args.menuButtons && args.menuButtons.length > 0"
+  ></app-dots-menu>
+</div>
 
 <mat-dialog-content [style.width]="args.width">
   <div>

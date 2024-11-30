@@ -6,6 +6,9 @@ import { api } from './api'
 import session from 'cookie-session'
 import path from 'path'
 import fs from 'fs'
+import { repo } from 'remult'
+import { Event } from '../app/home/events'
+import { getFromS3 } from './play-with-s3'
 
 async function startup() {
   const app = express()
@@ -24,6 +27,26 @@ async function startup() {
   //  app.use(helmet({ contentSecurityPolicy: false }))
 
   app.use(api)
+
+  app.get('/api/images/:id', api.withRemult, async (req, res) => {
+    try {
+      const e = await repo(Event).findId(
+        //@ts-ignore
+        req.params.id
+      )
+      if (!e || !e.hasS3Image) {
+        res.status(404).send('not found')
+        return
+      }
+      const r = await getFromS3(e.id)
+      console.log(r.ContentType)
+      res.contentType(r.ContentType!)
+      res.send(await r.getBuffer())
+    } catch (err: any) {
+      console.log({ url: req.url, err })
+      res.status(500).json(err)
+    }
+  })
 
   let dist = path.resolve('dist/angular-starter-project')
   if (!fs.existsSync(dist)) {

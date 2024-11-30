@@ -7,11 +7,11 @@
     (resize)="checkContentHeight()"
   >
     <p (click)="toggleText($event)">
-      <a [href]="event.imageUrl" target="_blank">
+      <a [href]="imageUrl()" target="_blank">
         <img
-          *ngIf="event.imageUrl"
+          *ngIf="imageUrl()"
           style="max-height: 50px; max-width: 50px; float: right; margin: 4px"
-          [src]="event.imageUrl"
+          [src]="imageUrl()"
         />
       </a>
 
@@ -43,9 +43,9 @@
       [innerHTML]="transform(event.description)"
     ></p>
     <img
-      *ngIf="event.imageUrl"
+      *ngIf="imageUrl()"
       style="margin: 4px; display: block"
-      [src]="event.imageUrl"
+      [src]="imageUrl()"
     />
     <ng-container *ngFor="let s of sources(); let i = index">
       <a [href]="s" target="_blank"> {{ i + 1 }}</a>

@@ -3,6 +3,7 @@ import { GeocodeResult, Location } from './address-input/google-api-helpers'
 import {
   DataAreaFieldsSetting,
   GridSettings,
+  RowButton,
 } from '../common-ui-elements/interfaces'
 
 export interface UITools {
@@ -88,4 +89,5 @@ export interface AreaDialogArgs {
   validate?: () => Promise<void>
   buttons?: button[]
   width?: string
+  menuButtons?: RowButton<any>[]
 }
