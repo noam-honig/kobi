@@ -112,7 +112,10 @@ export async function openDialog<T, C>(
   setParameters?: (it: C) => void,
   returnAValue?: (it: C) => T
 ): Promise<T> {
-  let ref = _matDialog.open(component, (component as any)[dialogConfigMember])
+  let ref = _matDialog.open(component, {
+    disableClose: true,
+    ...(component as any)[dialogConfigMember],
+  })
   if (setParameters) setParameters(ref.componentInstance)
   ;(ref.componentInstance as WantsToCloseDialog).closeDialog = () => ref.close()
   var r
