@@ -7,6 +7,7 @@ import { UsersComponent } from './users/users.component'
 import { AdminGuard } from './users/AdminGuard'
 import { ShowDialogOnErrorErrorHandler } from './common/UIToolsService'
 import { terms } from './terms'
+import { OneDayComponent } from './one-day/one-day.component'
 
 const defaultRoute = terms.home
 const routes: Routes = [
@@ -16,6 +17,9 @@ const routes: Routes = [
     component: UsersComponent,
     canActivate: [AdminGuard],
   },
+  { path: 'o', component: OneDayComponent },
+  { path: 'o/:month', component: OneDayComponent },
+  { path: 'o/:month/:day', component: OneDayComponent },
   { path: '**', redirectTo: '/' + defaultRoute, pathMatch: 'full' },
 ]
 

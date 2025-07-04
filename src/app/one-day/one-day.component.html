@@ -1,0 +1,65 @@
+<div style="display: flex; justify-content: center">
+  <div style="width: 100%; max-width: 700px">
+    <div
+      style="
+        text-align: center;
+        margin-bottom: 16px;
+        font-weight: normal;
+        font-size: 1.2em;
+      "
+    >
+      ארועים בתאריך {{ day }}/{{ month }} - מאת קובי גרנות
+    </div>
+    <mat-card
+      style="margin-bottom: 8px"
+      *ngFor="let event of events; let i = index"
+      [attr.id]="'event-' + i"
+    >
+      <div #textContent class="text-content">
+        <div
+          style="
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+          "
+        >
+          <a [href]="imageUrl(event)" target="_blank">
+            <img
+              *ngIf="imageUrl(event)"
+              style="
+                max-height: 50px;
+                max-width: 50px;
+                float: right;
+                margin: 4px;
+              "
+              [src]="imageUrl(event)"
+            />
+          </a>
+          {{ event.year }} -
+          <span style="font-weight: 500; font-size: 1.15em; color: #444">{{
+            event.title
+          }}</span>
+          <ng-container *ngIf="i < events.length - 1">
+            |
+            <a
+              href="#"
+              (click)="scrollTo('event-' + (i + 1)); $event.preventDefault()"
+              >דלג לבא</a
+            >
+          </ng-container>
+        </div>
+        <p style="white-space: break-spaces">{{ event.description }}</p>
+        <img
+          *ngIf="imageUrl(event)"
+          style="margin: 4px; display: block"
+          [src]="imageUrl(event)"
+        />
+      </div>
+    </mat-card>
+    <div style="height: 90vh"></div>
+  </div>
+</div>

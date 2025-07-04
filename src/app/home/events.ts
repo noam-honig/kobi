@@ -94,7 +94,7 @@ export class Event extends EntityBase {
   }
 
   message() {
-    return '*' + this.year + '* - ' + this.title + '\n' + this.description
+    return '*' + this.year + '* - ' + this.title + '\n'
   }
 
   aiTextWithoutDate() {

@@ -19,6 +19,22 @@
         (showFullDate ? event.day + '/' + event.month + '/' : '') + event.year
       }}
       - <span [innerHTML]="transform(event.title)"></span>
+      <button
+        *ngIf="recencyType"
+        (click)="showRecencyInfo()"
+        style="
+          background: none;
+          border: none;
+          cursor: pointer;
+          vertical-align: middle;
+          margin-right: 4px;
+          color: orange;
+          font-size: 1.2em;
+        "
+        title="{{ recencyTooltip }}"
+      >
+        ✨
+      </button>
       <a
         *ngIf="remult.authenticated()"
         href="#"

@@ -28,7 +28,9 @@ export class AppComponent implements OnInit {
   ) {}
   terms = terms
   remult = remult
-
+  isOnODayRoute(): boolean {
+    return this.router.url.startsWith('/o/')
+  }
   async signIn() {
     const signIn = new SignInController()
     openDialog(

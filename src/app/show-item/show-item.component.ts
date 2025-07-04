@@ -14,6 +14,7 @@ import { sendWhatsappToPhone, whatsappUrl } from '../common/fields/PhoneField'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { openDialog } from '../common-ui-elements'
 import { UploadImageComponent } from './upload-image.component'
+import { formatDistanceToNow } from 'date-fns'
 
 @Component({
   selector: 'app-show-item',
@@ -176,5 +177,32 @@ export class ShowItemComponent implements OnInit {
           },
         })
     )
+  }
+  get recencyType(): 'created' | 'updated' | undefined {
+    const now = new Date()
+    const createdDiff =
+      (now.getTime() - new Date(this.event.createdAt).getTime()) /
+      (1000 * 60 * 60 * 24)
+    const updatedDiff =
+      (now.getTime() - new Date(this.event.updatedAt).getTime()) /
+      (1000 * 60 * 60 * 24)
+    if (createdDiff < 3000) return 'created'
+    if (updatedDiff < 3000) return 'updated'
+    return undefined
+  }
+  get recencyTooltip(): string {
+    if (!this.event.createdAt) return ''
+    const created = formatDistanceToNow(new Date(this.event.createdAt), {
+      addSuffix: true,
+      locale: undefined,
+    })
+    const updated = formatDistanceToNow(new Date(this.event.updatedAt), {
+      addSuffix: true,
+      locale: undefined,
+    })
+    return `נוסף: ${created}\nעודכן: ${updated}`
+  }
+  showRecencyInfo() {
+    alert(this.recencyTooltip)
   }
 }

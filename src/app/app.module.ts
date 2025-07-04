@@ -30,7 +30,8 @@ import { AddressInputComponent } from './common/address-input/address-input.comp
 import { MultiSelectListDialogComponent } from './common/multi-select-list-dialog/multi-select-list-dialog.component'
 import { InputImageComponent } from './common/input-image/input-image.component'
 import { ShowItemComponent } from './show-item/show-item.component'
-import { MatProgressBarModule } from '@angular/material/progress-bar'
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { OneDayComponent } from './one-day/one-day.component'
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar'
     MultiSelectListDialogComponent,
     InputImageComponent,
     ShowItemComponent,
+    OneDayComponent,
   ],
   imports: [
     BrowserModule,

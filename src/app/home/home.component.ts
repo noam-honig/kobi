@@ -92,11 +92,14 @@ export class HomeComponent implements OnInit {
     this.load()
   }
   whatsappAll() {
+    const url = `${window.location.origin}/o/${this.search.month}/${this.search.day}`
     sendWhatsappToPhone(
       '',
       `אירועים ב *${this.search.day.toString()}/${
         this.search.month
-      }* לפי שנים:\n` + this.events.map((x) => x.message()).join('\n\n')
+      }* לפי שנים:\n` +
+        this.events.map((x) => x.message()).join('\n\n') +
+        `\n\nקראו עוד ב:\n${url}`
     )
   }
 
