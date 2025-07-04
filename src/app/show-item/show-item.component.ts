@@ -15,6 +15,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { openDialog } from '../common-ui-elements'
 import { UploadImageComponent } from './upload-image.component'
 import { formatDistanceToNow } from 'date-fns'
+import { he } from 'date-fns/locale'
 
 @Component({
   selector: 'app-show-item',
@@ -191,16 +192,25 @@ export class ShowItemComponent implements OnInit {
     return undefined
   }
   get recencyTooltip(): string {
-    if (!this.event.createdAt) return ''
-    const created = formatDistanceToNow(new Date(this.event.createdAt), {
-      addSuffix: true,
-      locale: undefined,
-    })
-    const updated = formatDistanceToNow(new Date(this.event.updatedAt), {
-      addSuffix: true,
-      locale: undefined,
-    })
-    return `נוסף: ${created}\nעודכן: ${updated}`
+    if (!this.event.createdAt && !this.event.updatedAt) return ''
+    let created = ''
+    let updated = ''
+    if (this.event.createdAt) {
+      created = formatDistanceToNow(new Date(this.event.createdAt), {
+        addSuffix: true,
+        locale: he,
+      })
+    }
+    if (this.event.updatedAt) {
+      updated = formatDistanceToNow(new Date(this.event.updatedAt), {
+        addSuffix: true,
+        locale: he,
+      })
+    }
+    let result = ''
+    if (updated) result += `עודכן: ${updated}`
+    if (created) result += (result ? '\n' : '') + `נוסף: ${created}`
+    return result
   }
   showRecencyInfo() {
     alert(this.recencyTooltip)
