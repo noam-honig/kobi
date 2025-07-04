@@ -187,8 +187,8 @@ export class ShowItemComponent implements OnInit {
     const updatedDiff =
       (now.getTime() - new Date(this.event.updatedAt).getTime()) /
       (1000 * 60 * 60 * 24)
-    if (createdDiff < 3000) return 'created'
-    if (updatedDiff < 3000) return 'updated'
+    if (createdDiff < 10) return 'created'
+    if (updatedDiff < 10) return 'updated'
     return undefined
   }
   get recencyTooltip(): string {
@@ -206,6 +206,10 @@ export class ShowItemComponent implements OnInit {
         addSuffix: true,
         locale: he,
       })
+    }
+    // If both dates exist and are the same, show only 'נוסף'
+    if (created == updated || !updated) {
+      return `נוסף: ${created}`
     }
     let result = ''
     if (updated) result += `עודכן: ${updated}`

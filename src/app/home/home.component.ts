@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit {
       `אירועים ב *${this.search.day.toString()}/${
         this.search.month
       }* לפי שנים:\n` +
-        this.events.map((x) => x.message()).join('\n\n') +
+        this.events.map((x) => x.message()).join('') +
         `\n\nקראו עוד ב:\n${url}`
     )
   }
