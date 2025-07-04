@@ -1,5 +1,12 @@
 <div style="display: flex; justify-content: center">
-  <div style="width: 100%; max-width: 700px">
+  <div
+    style="
+      width: 100%;
+      max-width: 700px;
+      box-sizing: border-box;
+      padding: 0 8px;
+    "
+  >
     <div
       style="
         text-align: center;
@@ -35,6 +42,8 @@
                 max-width: 50px;
                 float: right;
                 margin: 4px;
+                max-width: 100%;
+                height: auto;
               "
               [src]="imageUrl(event)"
             />
@@ -55,7 +64,7 @@
         <p style="white-space: break-spaces">{{ event.description }}</p>
         <img
           *ngIf="imageUrl(event)"
-          style="margin: 4px; display: block"
+          style="margin: 4px; display: block; max-width: 100%; height: auto"
           [src]="imageUrl(event)"
         />
       </div>
